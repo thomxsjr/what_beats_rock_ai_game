@@ -15,14 +15,32 @@ dotenv.config();
 
 // Create Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Set up middleware
-app.use(helmet());
-app.use(cors());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'", "http://localhost:5173", process.env.VITE_API_URL || 'http://localhost:3000'],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      fontSrc: ["'self'", "data:", "https:"],
+    },
+  },
+}));
+
+// Configure CORS
+app.use(cors({
+  origin: ['http://localhost:5173', process.env.VITE_API_URL || 'http://localhost:3000'],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'X-Persona'],
+}));
+
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../dist')));
