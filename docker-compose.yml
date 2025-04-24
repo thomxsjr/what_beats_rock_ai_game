@@ -12,7 +12,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - DATABASE_URL=postgresql://postgres:nirmalkthomas@postgres:5432/whatbeatsrock
+      - DATABASE_URL=${DATABASE_URL}
       - REDIS_URL=redis://redis:6379
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     restart: unless-stopped
@@ -23,8 +23,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=nirmalkthomas
+      - POSTGRES_USER=whatbeatsrock_user
+      - POSTGRES_PASSWORD=w8YGOy8PO7WpBYUDmtlROODiuPKqh5D5
       - POSTGRES_DB=whatbeatsrock
     volumes:
       - postgres_data:/var/lib/postgresql/data
