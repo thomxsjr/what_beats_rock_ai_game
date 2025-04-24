@@ -6,7 +6,7 @@ export async function setupCache() {
   try {
     // Connect to Redis
     redisClient = createClient({
-      url: process.env.REDIS_URL || 'redis://localhost:6379'
+      url: process.env.REDIS_URL || 'redis://redis:6379'
     });
     
     redisClient.on('error', (err) => console.log('Redis error:', err));
